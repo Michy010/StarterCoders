@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - StarterCoder</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reusing the same styles as login page */
+           :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+            --success: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f9ff;
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .auth-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            width: 100%;
+        }
+
+        .auth-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 600px;
+        }
+
+        .auth-hero {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-hero::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .auth-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            left: -30px;
+            width: 250px;
+            height: 250px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .auth-hero h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .auth-hero p {
+            opacity: 0.9;
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
+        }
+
+        .auth-form-container {
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .auth-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .auth-logo img {
+            height: 40px;
+        }
+
+        .auth-title {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .auth-subtitle {
+            color: var(--gray);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+            outline: none;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-block;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-block {
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--gray);
+        }
+
+        .auth-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .auth-card {
+                grid-template-columns: 1fr;
+            }
+            
+            .auth-hero {
+                display: none;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .auth-form-container {
+                padding: 40px 20px;
+            }
+        }
+        /* Add these additional styles for registration */
+        
+        .password-strength {
+            height: 4px;
+            background: #e2e8f0;
+            margin-top: 8px;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .password-strength-bar {
+            height: 100%;
+            width: 0%;
+            background: #ef4444;
+            transition: all 0.3s;
+        }
+        
+        .password-strength.weak .password-strength-bar {
+            width: 30%;
+            background: #ef4444;
+        }
+        
+        .password-strength.medium .password-strength-bar {
+            width: 60%;
+            background: #f59e0b;
+        }
+        
+        .password-strength.strong .password-strength-bar {
+            width: 100%;
+            background: #10b981;
+        }
+        
+        .password-hints {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-top: 5px;
+        }
+        
+        .form-group.flex {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .form-group.flex > div {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-hero">
+                <h2>Start Your Journey</h2>
+                <p>Join our community of problem-solvers and innovators. Learn tech skills, solve real challenges, and create opportunities.</p>
+            </div>
+            
+            <div class="auth-form-container">
+                <a href="index.html" class="auth-logo">
+                    <img src="https://via.placeholder.com/40x40" alt="StarterCoder Logo">
+                    <span>StarterCoder</span>
+                </a>
+                
+                <h1 class="auth-title">Create an Account</h1>
+                <p class="auth-subtitle">Get started with StarterCoder in just a few steps</p>
+                
+                <form id="registerForm">
+                    <div class="form-group flex">
+                        <div>
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" class="form-control" placeholder="John" required>
+                        </div>
+                        <div>
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" class="form-control" placeholder="Doe" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" class="form-control" placeholder="your@email.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="userType">I am a:</label>
+                        <select id="userType" class="form-control" required>
+                            <option value="">Select your role</option>
+                            <option value="student">Student</option>
+                            <option value="teacher">Teacher/Mentor</option>
+                            <option value="professional">Working Professional</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" class="form-control" placeholder="Create a password" required>
+                        <div class="password-strength" id="passwordStrength">
+                            <div class="password-strength-bar"></div>
+                        </div>
+                        <div class="password-hints">
+                            <div>• At least 8 characters</div>
+                            <div>• One uppercase letter</div>
+                            <div>• One number</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm your password" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="checkbox" id="terms" required>
+                        <label for="terms">I agree to the <a href="terms.html">Terms of Service</a> and <a href="privacy.html">Privacy Policy</a></label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+                    
+                    <div class="auth-footer">
+                        Already have an account? <a href="login.html">Login here</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Password strength checker
+        document.getElementById('password').addEventListener('input', function(e) {
+            const password = e.target.value;
+            const strengthBar = document.getElementById('passwordStrength');
+            
+            // Reset classes
+            strengthBar.className = 'password-strength';
+            
+            if (password.length === 0) return;
+            
+            // Very basic strength check (in real app, use more robust validation)
+            const hasUpperCase = /[A-Z]/.test(password);
+            const hasNumber = /[0-9]/.test(password);
+            const isLong = password.length >= 8;
+            
+            if (isLong && hasUpperCase && hasNumber) {
+                strengthBar.classList.add('strong');
+            } else if (password.length >= 6 && (hasUpperCase || hasNumber)) {
+                strengthBar.classList.add('medium');
+            } else {
+                strengthBar.classList.add('weak');
+            }
+        });
+        
+        // Form submission
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const email = document.getElementById('email').value;
+            const userType = document.getElementById('userType').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            // Simple validation
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            if (!document.getElementById('terms').checked) {
+                alert('You must agree to the terms and conditions');
+                return;
+            }
+            
+            // Here you would typically send data to your backend
+            console.log('Registration data:', { 
+                firstName, 
+                lastName, 
+                email, 
+                userType 
+            });
+            
+            // Simulate successful registration
+            alert('Registration successful! Redirecting to login...');
+            window.location.href = 'login.html';
+        });
+    </script>
+</body>
+</html>

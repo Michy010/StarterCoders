@@ -1,0 +1,195 @@
+<div class="help-system">
+  <!-- Help Request Modal -->
+  <div class="modal" id="helpModal">
+    <div class="modal-content glass-card">
+      <span class="close">&times;</span>
+      
+      <div class="tutor-matching">
+        <div class="loader">
+          <div class="pulse"></div>
+          <p>Finding the best tutor for you...</p>
+          <div class="tutor-avatars">
+            <img src="https://i.pravatar.cc/80?img=1" class="tutor-avatar pulse" alt="Tutor 1">
+            <img src="https://i.pravatar.cc/80?img=2" class="tutor-avatar pulse" alt="Tutor 2">
+            <img src="https://i.pravatar.cc/80?img=3" class="tutor-avatar pulse" alt="Tutor 3">
+          </div>
+        </div>
+        
+        <div class="matched-tutor" style="display:none;">
+          <div class="match-success">
+            <i class="fas fa-check-circle"></i>
+            <h3>Match Found!</h3>
+            <div class="tutor-card">
+              <img src="https://i.pravatar.cc/120?img=5" alt="Tutor">
+              <h4>Dr. Sarah Johnson</h4>
+              <p>Python Expert | 8 years experience</p>
+              <div class="rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+                <span>4.7 (82 sessions)</span>
+              </div>
+            </div>
+            <button class="btn-start-session">
+              <i class="fas fa-video"></i> Start Session
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Help Button -->
+  <button class="help-fab" id="helpFab">
+    <i class="fas fa-hands-helping"></i>
+  </button>
+</div>
+
+<style>
+  /* Help System Styles */
+  .help-system {
+    --primary: #4361ee;
+    --secondary: #f72585;
+    --accent: #4cc9f0;
+  }
+
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(5px);
+  }
+
+  .modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 500px;
+    padding: 2rem;
+    border-radius: 16px;
+    animation: modalFadeIn 0.4s;
+  }
+
+  @keyframes modalFadeIn {
+    from { opacity: 0; transform: translate(-50%, -40%); }
+    to { opacity: 1; transform: translate(-50%, -50%); }
+  }
+
+  .close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+  .tutor-matching {
+    text-align: center;
+  }
+
+  .loader p {
+    margin: 1rem 0 2rem;
+    color: var(--primary);
+    font-weight: 500;
+  }
+
+  .tutor-avatars {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+
+  .tutor-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 3px solid var(--primary);
+    transition: all 0.3s;
+  }
+
+  .pulse {
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.7; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .tutor-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin: 1.5rem 0;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  }
+
+  .tutor-card img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+    border: 3px solid var(--accent);
+  }
+
+  .rating {
+    margin: 0.5rem 0;
+    color: var(--secondary);
+  }
+
+  .btn-start-session {
+    background: linear-gradient(to right, var(--secondary), var(--primary));
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: all 0.3s;
+  }
+
+  .btn-start-session:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(247, 37, 133, 0.3);
+  }
+</style>
+
+<script>
+  // Help System Functionality
+  const helpFab = document.getElementById('helpFab');
+  const modal = document.getElementById('helpModal');
+  const closeBtn = document.querySelector('.close');
+
+  helpFab.addEventListener('click', () => {
+    modal.style.display = 'block';
+    
+    // Simulate tutor matching (replace with real API call)
+    setTimeout(() => {
+      document.querySelector('.loader').style.display = 'none';
+      document.querySelector('.matched-tutor').style.display = 'block';
+    }, 3000);
+  });
+
+  closeBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
+  });
+
+  window.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
+</script>

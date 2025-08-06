@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dashboard - StarterCoder</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;  /* 💎 Updated vibrant blue */
+            --primary-light: #4895ef;
+            --secondary: #f72585; /* 💎 New accent pink */
+            --accent: #4cc9f0;   /* 💎 Fresh teal */
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --success: #38b000;
+            --warning: #ff9e00;
+            --danger: #ef233c;
+            --gray: #6c757d;
+        }
+
+        /* 💎 Glassmorphism Effect */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* 💎 Animated Gradient BG */
+        body {
+            background: linear-gradient(-45deg, #f8f9fa, #e2e8f0, #f0f4f8, #e5e9f2);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            min-height: 100vh;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Dashboard Grid */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 25px;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* 💎 Sidebar - Neumorphism Design */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .user-card {
+            padding: 2rem 1.5rem;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .user-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+
+        /* 💎 Progress Ring */
+        .progress-ring {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 1rem auto;
+        }
+
+        .progress-circle {
+            fill: none;
+            stroke: var(--primary-light);
+            stroke-width: 8;
+            stroke-dasharray: 283;
+            stroke-dashoffset: calc(283 - (283 * 0.65)); /* 65% progress */
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+            animation: progressFill 1.5s ease-out forwards;
+        }
+
+        @keyframes progressFill {
+            from { stroke-dashoffset: 283; }
+        }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-rows: auto 1fr;
+            gap: 1.5rem;
+        }
+
+        /* 💎 Help Button - Floating Action */
+        .help-fab {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--secondary), var(--danger));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 10px 25px rgba(247, 37, 133, 0.3);
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.3s;
+        }
+
+        .help-fab:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 15px 30px rgba(247, 37, 133, 0.4);
+        }
+
+        /* 💎 Project Cards - Interactive */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            padding: 1.5rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="glass-card" style="position: sticky; top: 0; z-index: 100;">
+        <div class="container">
+            <!-- Your existing header content -->
+        </div>
+    </header>
+
+    <!-- Dashboard -->
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <!-- 💎 User Profile Card -->
+            <div class="user-card glass-card">
+                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Student" class="avatar">
+                <h3>Sarah Johnson</h3>
+                <p>Web Development Track</p>
+                
+                <div class="progress-ring">
+                    <svg viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="45" stroke="#e2e8f0" stroke-width="8" fill="none"/>
+                        <circle class="progress-circle" cx="50" cy="50" r="45"/>
+                    </svg>
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-weight: bold;">65%</div>
+                </div>
+                <small>Overall Progress</small>
+            </div>
+
+            <!-- 💎 Quick Stats -->
+            <div class="glass-card" style="padding: 1.5rem;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                    <div>
+                        <div style="font-size: 0.8rem; color: var(--gray);">Active Projects</div>
+                        <div style="font-size: 1.5rem; font-weight: bold;">3</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 0.8rem; color: var(--gray);">Skills Learned</div>
+                        <div style="font-size: 1.5rem; font-weight: bold;">7</div>
+                    </div>
+                </div>
+                <div style="height: 4px; background: #e2e8f0; border-radius: 2px; margin: 1rem 0;">
+                    <div style="height: 100%; width: 30%; background: var(--success); border-radius: 2px;"></div>
+                </div>
+                <small>Monthly Goal: 30% completed</small>
+            </div>
+
+            <!-- 💎 Quick Help Shortcut -->
+            <div class="glass-card" style="padding: 1.5rem; background: rgba(248, 249, 250, 0.9);">
+                <h4 style="margin-bottom: 1rem;">Quick Help</h4>
+                <button style="width: 100%; padding: 0.75rem; background: linear-gradient(to right, var(--primary), var(--primary-light)); color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">
+                    <i class="fas fa-hands-helping"></i> Request Tutor
+                </button>
+                <div style="margin-top: 1rem; font-size: 0.9rem; color: var(--gray);">
+                    <p><i class="fas fa-clock"></i> Average response: <strong>12 mins</strong></p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- 💎 Welcome Header -->
+            <div class="glass-card" style="padding: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h2 style="margin-bottom: 0.5rem;">Welcome back, Sarah! 👋</h2>
+                    <p style="color: var(--gray);">Here's what you're working on today</p>
+                </div>
+                <div style="display: flex; gap: 1rem;">
+                    <button style="padding: 0.75rem 1.5rem; background: white; border: 1px solid #e2e8f0; border-radius: 8px; cursor: pointer;">
+                        <i class="fas fa-plus"></i> New Project
+                    </button>
+                </div>
+            </div>
+
+            <!-- 💎 Active Projects Grid -->
+            <div>
+                <h3 style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-project-diagram" style="color: var(--primary);"></i> Active Projects
+                </h3>
+                <div class="project-grid">
+                    <!-- Project Card 1 -->
+                    <div class="project-card glass-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <span style="font-size: 0.8rem; background: rgba(67, 97, 238, 0.1); color: var(--primary); padding: 0.25rem 0.75rem; border-radius: 20px;">Community</span>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <i class="fas fa-circle" style="color: var(--warning); font-size: 0.5rem;"></i>
+                                <small style="color: var(--gray);">In Progress</small>
+                            </div>
+                        </div>
+                        <h4 style="margin-bottom: 0.5rem;">Farmers' Market App</h4>
+                        <p style="color: var(--gray); margin-bottom: 1rem;">Connecting local farmers with urban buyers</p>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="width: 60%;">
+                                <div style="height: 6px; background: #e2e8f0; border-radius: 3px;">
+                                    <div style="height: 100%; width: 45%; background: var(--primary); border-radius: 3px;"></div>
+                                </div>
+                                <small style="color: var(--gray);">45% completed</small>
+                            </div>
+                            <button style="padding: 0.5rem 1rem; background: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer;">
+                                Continue
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Project Card 2 -->
+                    <div class="project-card glass-card">
+                        <!-- Similar structure as above -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 💎 Help Resources Section -->
+            <div style="margin-top: 2rem;">
+                <h3 style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-life-ring" style="color: var(--secondary);"></i> Help Resources
+                </h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
+                    <div class="glass-card" style="padding: 1.5rem; text-align: center; cursor: pointer; transition: all 0.3s;">
+                        <div style="width: 50px; height: 50px; background: rgba(239, 35, 60, 0.1); color: var(--danger); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.25rem;">
+                            <i class="fas fa-hands-helping"></i>
+                        </div>
+                        <h4>Urgent Help</h4>
+                        <small style="color: var(--gray);">Connect with a tutor now</small>
+                    </div>
+                    
+                    <div class="glass-card" style="padding: 1.5rem; text-align: center; cursor: pointer; transition: all 0.3s;">
+                        <div style="width: 50px; height: 50px; background: rgba(76, 201, 240, 0.1); color: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.25rem;">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <h4>Video Tutorials</h4>
+                        <small style="color: var(--gray);">Step-by-step guides</small>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 💎 Floating Help Button -->
+    <div class="help-fab" id="helpFab">
+        <i class="fas fa-question"></i>
+    </div>
+
+    <!-- JavaScript (same as previous example) -->
+    <script>
+        // Help system functionality
+        document.getElementById('helpFab').addEventListener('click', function() {
+            alert("Help request initiated! Our tutors will contact you shortly.");
+            // Actual implementation would open modal/form
+        });
+    </script>
+</body>
+</html>
